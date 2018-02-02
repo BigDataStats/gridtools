@@ -36,23 +36,27 @@ def validate_grid3d_input(nodes):
     """
     Validate grid3d input
     """
-    assert isinstance(nodes, np.ndarray)
-    assert nodes.ndim == 1
+    assert isinstance(nodes, np.ndarray), "nodes should be a numpy array"
+    assert nodes.ndim == 1, "nodes must have dimension 1"
     
 
 class grid3d:
     """
     A class to contain grids
     
-    >>> grid = grid3d(np.arange(24), (2, 3, 4))
-        """
-
+    >>> grid = grid3d(np.arange(24), (2, 3, 4)) # compatible shape
+    >>> grid = grid3d(np.arange(24), (2, 3, 5)) 
+    Traceback (most recent call last):
+        ...
+    AssertionError: incompatible shape
+    """
+    
     """
     Initializer
     """
     def __init__(self, nodes, shape):
         validate_grid3d_input(nodes)
-        assert np.prod(shape) == len(nodes)
+        assert np.prod(shape) == len(nodes), "incompatible shape"
         self.nodes = nodes
         self.edges = gen_edges3d(shape)
 
